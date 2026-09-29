@@ -232,7 +232,65 @@ async def queue_cmd(_, m):
     if not q:
         return await m.reply_text(
             "📭 Queue is empty."
-        ) 
+        )
+
+    lines = ["📜 **Queue**"]
+
+    for i, item in enumerate(q, 1):
+        lines.append(
+            f"{i}. {item['title']}"
+        )
+
+    await m.reply_text(
+        "\n".join(lines)
+    )
+
+
+@app.on_message(filters.command("nowplaying") & filters.group)
+async def nowplaying(_, m):
+    item = current.get(m.chat.id)
+
+    if not item:
+        return await m.reply_text(
+            "🎵 Nothing is playing."
+        )
+
+    await m.reply_text(
+        f"🎶 **Now playing:** {item['title']}\n"
+        f"Requested by {item['requested_by']}"
+    )
+
+
+@app.on_message(filters.command("setchannel") & filters.group)
+async def setchannel(_, m):
+    await m.reply_text(
+        "📢 Channel is configured through "
+        "the CHANNEL_USERNAME environment variable."
+    )
+
+
+@app.on_message(filters.command("channel"))
+async def channel(_, m):
+    if not CHANNEL_USERNAME:
+        return await m.reply_text(
+            "📢 No channel configured yet."
+        )
+
+    username = CHANNEL_USERNAME.lstrip("@")
+
+    await m.reply_text(
+        f"📢 **Channel:** @{username}",
+        reply_markup=InlineKeyboardMarkup([
+            [
+                InlineKeyboardButton(
+                    "Open Channel",
+                    url=f"https://t.me/{username}"
+                )
+            ]
+        ])
+    )
+
+
 async def main():
     global call
 
@@ -252,4 +310,3 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
-    lines = ["📜 **Queue**"]
