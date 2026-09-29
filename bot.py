@@ -232,8 +232,8 @@ async def queue_cmd(_, m):
     if not q:
         return await m.reply_text(
             "📭 Queue is empty."
-        )
-      async def main():
+        ) 
+async def main():
     global call
 
     await app.start()
