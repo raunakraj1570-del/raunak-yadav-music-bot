@@ -37,7 +37,7 @@ if SESSION_STRING:
         in_memory=True,
     )
 
-call = PyTgCalls(user_client) if user_client else None
+call = None
 queues = defaultdict(deque)
 current = {}
 
@@ -233,5 +233,23 @@ async def queue_cmd(_, m):
         return await m.reply_text(
             "📭 Queue is empty."
         )
+      async def main():
+    global call
 
+    await app.start()
+
+    if user_client:
+        await user_client.start()
+        call = PyTgCalls(user_client)
+        await call.start()
+
+    await start_web()
+
+    print("Raunak Yadav × Music Bot is online.")
+
+    await asyncio.Event().wait()
+
+
+if __name__ == "__main__":
+    asyncio.run(main())
     lines = ["📜 **Queue**"]
