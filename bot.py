@@ -1,4 +1,8 @@
+import pyrogram.errors
+if not hasattr(pyrogram.errors, "GroupcallForbidden"):
+    pyrogram.errors.GroupcallForbidden = pyrogram.errors.GroupCallForbidden
 import os
+
 import asyncio
 from collections import defaultdict, deque
 from aiohttp import web
