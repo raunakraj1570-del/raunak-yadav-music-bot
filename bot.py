@@ -1,6 +1,6 @@
 import pyrogram.errors
 if not hasattr(pyrogram.errors, "GroupcallForbidden"):
-    pyrogram.errors.GroupcallForbidden = pyrogram.errors.GroupCallForbidden
+    pyrogram.errors.GroupcallForbidden
 import os
 import asyncio
 from collections import defaultdict, deque
